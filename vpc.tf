@@ -24,7 +24,7 @@ resource "aws_internet_gateway" "myapp-igw" {
 resource "aws_default_route_table" "main-rtb" {
   default_route_table_id = aws_vpc.myapp-vpc.default_route_table_id
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = "10.0.0.0/16"
     gateway_id = aws_internet_gateway.myapp-igw.id
   }
   tags = {
@@ -38,19 +38,19 @@ resource "aws_default_security_group" "default-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
   ingress {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["10.0.0.0/16"]
   }
   tags = {
     Name = "${var.env_prefix}-default-sg"
